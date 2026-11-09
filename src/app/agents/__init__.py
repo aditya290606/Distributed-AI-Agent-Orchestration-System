@@ -1,1 +1,71 @@
 """Autonomous AI Agent definitions, prompt specifications, and tool registries."""
+
+from app.agents.base import AgentConfig, BaseAgent
+from app.agents.contracts import AgentExecutionStatus, AgentInput, AgentOutput
+from app.agents.factory import AgentFactory, get_agent_factory
+from app.agents.registry import AgentMetadata, AgentRegistry, get_agent_registry
+from app.agents.specialized import (
+    AlternativeComparison,
+    AnalysisAgent,
+    AnalysisResult,
+    CodeBlock,
+    CodingAgent,
+    CodingResult,
+    PlannerAgent,
+    PlannerResult,
+    ReportGenerationAgent,
+    ReportResult,
+    ReportSection,
+    ResearchAgent,
+    ResearchFinding,
+    ResearchResult,
+    ReviewerAgent,
+    ReviewFinding,
+    ReviewResult,
+    SupervisorAgent,
+    SupervisorResult,
+    TaskPlanStep,
+)
+from app.agents.tools import (
+    ControlledToolRegistry,
+    ToolDefinition,
+    ToolPermission,
+    get_tool_registry,
+)
+
+__all__ = [
+    "AgentConfig",
+    "AgentExecutionStatus",
+    "AgentFactory",
+    "AgentInput",
+    "AgentMetadata",
+    "AgentOutput",
+    "AgentRegistry",
+    "AlternativeComparison",
+    "AnalysisAgent",
+    "AnalysisResult",
+    "BaseAgent",
+    "CodeBlock",
+    "CodingAgent",
+    "CodingResult",
+    "ControlledToolRegistry",
+    "PlannerAgent",
+    "PlannerResult",
+    "ReportGenerationAgent",
+    "ReportResult",
+    "ReportSection",
+    "ResearchAgent",
+    "ResearchFinding",
+    "ResearchResult",
+    "ReviewFinding",
+    "ReviewResult",
+    "ReviewerAgent",
+    "SupervisorAgent",
+    "SupervisorResult",
+    "TaskPlanStep",
+    "ToolDefinition",
+    "ToolPermission",
+    "get_agent_factory",
+    "get_agent_registry",
+    "get_tool_registry",
+]

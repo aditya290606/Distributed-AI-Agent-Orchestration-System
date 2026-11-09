@@ -20,8 +20,35 @@ def test_default_settings():
     assert settings.app_version == "0.1.0"
     assert settings.environment == "development"
     assert not settings.is_production
+    assert "mysql+asyncmy://" in settings.async_database_url
+    assert "nexus_ai" in settings.async_database_url
     assert "postgresql+asyncpg://" in settings.resolved_database_url
     assert "redis://" in settings.resolved_redis_url
+
+
+def test_mysql_database_url_and_special_character_escaping():
+    """Verify safe MySQL URL generation and URL encoding of special password characters."""
+    settings = Settings(
+        DB_HOST="db.internal",
+        DB_PORT=3307,
+        DB_USER="admin_user",
+        DB_PASSWORD="P@ssw#rd/123!&*",
+        DB_NAME="production_nexus",
+        DB_POOL_SIZE=15,
+        DB_MAX_OVERFLOW=25,
+        DB_POOL_TIMEOUT=45,
+        DB_POOL_RECYCLE=3600,
+    )
+    url = settings.async_database_url
+    assert "mysql+asyncmy://" in url
+    assert "admin_user:" in url
+    # Ensure special characters are percent-encoded
+    assert "P%40ssw%23rd%2F123%21%26%2A" in url
+    assert "@db.internal:3307/production_nexus" in url
+    assert settings.db_pool_size == 15
+    assert settings.db_max_overflow == 25
+    assert settings.db_pool_timeout == 45
+    assert settings.db_pool_recycle == 3600
 
 
 def test_custom_test_settings(test_settings: Settings):
